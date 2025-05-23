@@ -64,20 +64,20 @@ jobs:
        id: docker-push
        run: |
            docker push fra.ocir.io/frazjikiagro/novirepo/mojrepo:latest
-deploy-job:
-  needs: build-job
-  runs-on: ubuntu-latest
-  steps:
-     - name: "Start deploy job"
-       run: |
-          echo "Starting the deploy job."
-     - name: Checkout
-       uses: actions/checkout@v4
+ deploy-job:
+   needs: build-job
+   runs-on: ubuntu-latest
+   steps:
+      - name: "Start deploy job"
+        run: |
+           echo "Starting the deploy job."
+      - name: Checkout
+        uses: actions/checkout@v4
 
-     - name: Configure Kubectl
-       uses: oracle-actions/configure-kubectl-oke@v1.3.2
-       id: kubectl-oke-action
-       with:
-          cluster: ${{ secrets.OKE_CLUSTER_OCID }}
-     - name: Run Kubectl
-       run: kubectl apply -f spring-app.yaml
+      - name: Configure Kubectl
+        uses: oracle-actions/configure-kubectl-oke@v1.3.2
+        id: kubectl-oke-action
+        with:
+           cluster: ${{ secrets.OKE_CLUSTER_OCID }}
+      - name: Run Kubectl
+        run: kubectl apply -f spring-app.yaml
